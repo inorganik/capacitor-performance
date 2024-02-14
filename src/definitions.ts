@@ -1,3 +1,3 @@
 export interface PerformancePlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  launchComplete(): Promise<{ value: string }>;
 }

@@ -7,12 +7,20 @@ import Capacitor
  */
 @objc(PerformancePlugin)
 public class PerformancePlugin: CAPPlugin {
-    private let implementation = Performance()
+    var launchStart: Date?
 
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
+    @objc public func launchComplete(_ call: CAPPluginCall) -> Void {
+        let endDate = Date()
+        let timeInterval = endDate.timeIntervalSince(launchStart!)
+        let result = String(format: "🏎️ Launch time: %.2f seconds", timeInterval)
+        print(result)
         call.resolve([
-            "value": implementation.echo(value)
+            "value": result
         ])
+    }
+
+    @objc override public func load() {
+        launchStart = Date()
+        print("🏎️ Performance plugin loaded")
     }
 }
